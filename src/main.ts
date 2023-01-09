@@ -76,8 +76,7 @@ export default class SmartRandomNotePlugin extends Plugin {
         const searchResults = searchView.dom.getFiles();
 
         if (!searchResults.length) {
-            new SmartRandomNoteNotice('No search results available', 5000);
-            return;
+            return await this.handleOpenRandomNote()
         }
 
         await this.openRandomNote(searchResults);
