@@ -1,10 +1,10 @@
-import SmartRandomNotePlugin from './main';
+import SurpriseNotePlugin from './main';
 import { PluginSettingTab, Setting } from 'obsidian';
 
-export class SmartRandomNoteSettingTab extends PluginSettingTab {
-    plugin: SmartRandomNotePlugin;
+export class SurpriseNoteSettingTab extends PluginSettingTab {
+    plugin: SurpriseNotePlugin;
 
-    constructor(plugin: SmartRandomNotePlugin) {
+    constructor(plugin: SurpriseNotePlugin) {
         super(plugin.app, plugin);
         this.plugin = plugin;
     }
@@ -14,7 +14,7 @@ export class SmartRandomNoteSettingTab extends PluginSettingTab {
 
         containerEl.empty();
 
-        containerEl.createEl('h2', { text: 'Smart Random Note Settings ' });
+        containerEl.createEl('h2', { text: 'Surprise Note Settings ' });
 
         new Setting(containerEl)
             .setName('Open in New Leaf')

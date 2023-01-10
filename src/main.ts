@@ -1,20 +1,20 @@
 import { MarkdownView, Plugin, TFile } from 'obsidian';
 import { getTagFilesMap, randomElement } from './utilities';
-import { SmartRandomNoteSettingTab } from './settingTab';
+import { SurpriseNoteSettingTab } from './settingTab';
 import { SearchView, SmartRandomNoteSettings } from './types';
 import { SmartRandomNoteNotice } from './smartRandomNoteNotice';
 import { OpenRandomTaggedNoteModal } from './openRandomTaggedNoteModal';
 
-export default class SmartRandomNotePlugin extends Plugin {
+export default class SurpriseNotePlugin extends Plugin {
     settings: SmartRandomNoteSettings = { openInNewLeaf: true, enableRibbonIcon: true };
     ribbonIconEl: HTMLElement | undefined = undefined;
 
     async onload(): Promise<void> {
-        console.log('loading smart-random-note');
+        console.log('loading surprise-note');
 
         await this.loadSettings();
 
-        this.addSettingTab(new SmartRandomNoteSettingTab(this));
+        this.addSettingTab(new SurpriseNoteSettingTab(this));
 
         this.addCommand({
             id: 'open-random-note',
@@ -42,7 +42,7 @@ export default class SmartRandomNotePlugin extends Plugin {
     }
 
     onunload = (): void => {
-        console.log('unloading smart-random-note');
+        console.log('unloading surprise-note');
     };
 
     handleOpenRandomNote = async (): Promise<void> => {
