@@ -1,15 +1,15 @@
 import { App, Modal } from 'obsidian';
-import OpenRandomTaggedNoteModalView from './OpenRandomTaggedNoteModalView.svelte';
+import TagModal from './TagModal.svelte';
 
 export class OpenRandomTaggedNoteModal extends Modal {
-    view: OpenRandomTaggedNoteModalView;
+    view: TagModal;
     tags: string[];
     submitCallback: ((selectedTag: string) => Promise<void>) | undefined = undefined;
 
     constructor(app: App, tags: string[]) {
         super(app);
         this.tags = tags;
-        this.view = new OpenRandomTaggedNoteModalView({
+        this.view = new TagModal({
             target: this.contentEl,
             props: { tags, handleSubmit: this.handleSubmit },
         });

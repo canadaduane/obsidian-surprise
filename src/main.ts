@@ -1,9 +1,10 @@
-import { MarkdownView, Plugin, TFile } from 'obsidian';
+import { MarkdownView, Plugin, TFile, Notice } from 'obsidian';
 import { getTagFilesMap, randomElement } from './utilities';
 import { SurpriseNoteSettingTab } from './settingTab';
 import { SearchView, SmartRandomNoteSettings } from './types';
-import { SmartRandomNoteNotice } from './smartRandomNoteNotice';
-import { OpenRandomTaggedNoteModal } from './openRandomTaggedNoteModal';
+import { OpenRandomTaggedNoteModal } from './tagModal';
+
+const NOTICE = 'Surprise Note';
 
 export default class SurpriseNotePlugin extends Plugin {
     settings: SmartRandomNoteSettings = { openInNewLeaf: true, enableRibbonIcon: true };
@@ -69,14 +70,14 @@ export default class SurpriseNotePlugin extends Plugin {
         const searchView = this.app.workspace.getLeavesOfType('search')[0]?.view as SearchView;
 
         if (!searchView) {
-            new SmartRandomNoteNotice('The core search plugin is not enabled', 5000);
+            new Notice(`${NOTICE}: The core search plugin is not enabled`, 5000);
             return;
         }
 
         const searchResults = searchView.dom.getFiles();
 
         if (!searchResults.length) {
-            return await this.handleOpenRandomNote()
+            return await this.handleOpenRandomNote();
         }
 
         await this.openRandomNote(searchResults);
@@ -86,14 +87,14 @@ export default class SurpriseNotePlugin extends Plugin {
         const searchView = this.app.workspace.getLeavesOfType('search')[0]?.view as SearchView;
 
         if (!searchView) {
-            new SmartRandomNoteNotice('The core search plugin is not enabled', 5000);
+            new Notice(`${NOTICE}: The core search plugin is not enabled`, 5000);
             return;
         }
 
         const searchResults = searchView.dom.getFiles();
 
         if (!searchResults.length) {
-            new SmartRandomNoteNotice('No search results available', 5000);
+            new Notice(`${NOTICE}: No search results available`, 5000);
             return;
         }
 
@@ -104,7 +105,7 @@ export default class SurpriseNotePlugin extends Plugin {
         const markdownFiles = files.filter((file) => file.extension === 'md');
 
         if (!markdownFiles.length) {
-            new SmartRandomNoteNotice("Can't open note. No markdown files available to open.", 5000);
+            new Notice(`${NOTICE}: Can't open note. No markdown files available to open.`, 5000);
             return;
         }
 
@@ -118,14 +119,14 @@ export default class SurpriseNotePlugin extends Plugin {
         const fileToLink = randomElement(files);
         const activeLeaf = this.app.workspace.activeLeaf;
         if (!activeLeaf) {
-            new SmartRandomNoteNotice("Can't insert link. No active note to insert link into", 5000);
+            new Notice(`${NOTICE}: Can't insert link. No active note to insert link into`, 5000);
             return;
         }
         const viewState = activeLeaf.getViewState();
         const canEdit = viewState.type === 'markdown' && viewState.state && viewState.state.mode == 'source';
 
         if (!canEdit) {
-            new SmartRandomNoteNotice("Can't insert link. The active file is not a markdown file in edit mode.", 5000);
+            new Notice(`${NOTICE}: Can't insert link. The active file is not a markdown file in edit mode.`, 5000);
             return;
         }
 
